@@ -1,0 +1,17 @@
+{
+    "name": "eyes-sourcemap-webpack",
+    "version": "1.0.1",
+    "description": "eyes-sourcemap-webpack",
+    "author": "mobei",
+    "main": "index.js",
+    "files": [
+      "dist"
+    ],
+    "repository": {
+      "type": "git",
+      "url": ""
+    },
+    "keywords": [],
+    "license": "ISC",
+    "dependencies": {}
+  }
