@@ -1,25 +1,24 @@
 <div align="center">
-    <p>eyes-sourcemap-webpack</p>
+  <h1>eyes-sourcemap-webpack</h1> <p>A webpack plugin for uploading source maps during build processes, supporting error tracking and debugging in production.</p>
 </div>
 
-## 功能
+📋 Introduction
 
-1、打包时自动上传sourceMap,在打包完成后，输出dist文件前运行
-
-注意：
-1、需要配置webpack的productionSourceMap，否则无法上传sourceMap
-2、本插件需要配套编写服务端上传接口
-3、本插件支持webpack,vue项目
+eyes-sourcemap-webpack is a powerful webpack plugin that automatically uploads source maps at build time, enabling efficient debugging and error tracking. It executes after the build process, before the final output of the dist folder.
 
 
 
-## 安装
+🚀 Installation
+
+Install the plugin via npm:
 
 ```bash
-$ npm install eyes-sourcemap-webpack -D
+npm install eyes-sourcemap-webpack --save-dev
 ```
 
-## 配置
+⚙️ Configuration
+
+Below is an example of how to configure the plugin in your vue.config.js:
 
 ```bash
 // vue.config.js
@@ -30,14 +29,26 @@ module.exports = defineConfig({
   configureWebpack: {
     plugins: [
       new EyesSourceMap({
-        dsn: 'http://xxx', // 上传地址, 必填
-        token: '', // 项目id, 必填
-        uploadScript: ['vue-cli-service build --mode staging'], // 执行上报的构建命令, 选填
-        productionSourceMap: true, // 是否保留sourceMap, 选填，默认false不保留
-        concurrency: 6, // 上传最大并发数，选填，默认5
-        api: '' // 上传接口，选填,默认/api/upload/sourcemap
+        dsn: 'http://your-upload-url', // Required: API base URL for uploads
+        token: 'your-project-token',   // Required: Unique project identifier
+        uploadScript: ['vue-cli-service build --mode staging'], // Optional: Commands triggering upload
+        productionSourceMap: true,     // Optional: Retain source maps (default: false)
+        concurrency: 6,                 // Optional: Max upload concurrency (default: 5)
+        api: '/api/upload/sourcemap'   // Optional: API endpoint for uploads (default: /api/upload/sourcemap)
       })
     ]
   }
 })
 ```
+
+🎯 When to Use This Plugin?
+
+Production Error Tracking: Upload source maps to your monitoring service for better stack traces in production.
+Efficient Debugging: Retain hidden source maps to debug production issues without exposing code to end-users.
+
+📝 Changelog
+
+v1.0.2
+
+Initial release of the plugin.
+Support for concurrent uploads with customizable limits.

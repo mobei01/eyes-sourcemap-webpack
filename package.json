@@ -1,17 +1,30 @@
 {
     "name": "eyes-sourcemap-webpack",
-    "version": "1.0.1",
-    "description": "eyes-sourcemap-webpack",
+    "version": "1.0.2",
+    "description": "A webpack plugin for uploading source maps to monitoring services. Simplify source map management and error tracking in production builds.",
     "author": "mobei",
-    "main": "index.js",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "type": "module", 
     "files": [
-      "dist"
+      "/dist"
     ],
     "repository": {
       "type": "git",
       "url": ""
     },
-    "keywords": [],
+    "keywords": [
+      "sourcemap",
+      "sourcemap-upload",
+      "source-map-plugin",
+      "webpack-source-map",
+      "webpack-plugin"
+    ],
     "license": "ISC",
-    "dependencies": {}
+    "scripts": {
+      "build": "rollup -c"
+    },
+    "devDependencies": {
+      "rollup": "^4.24.0"
+    }
   }
