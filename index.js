@@ -21,6 +21,7 @@ class EyesSourceMap {
     this.concurrency = options.concurrency || 5;
     this.api = options.api || '/api/upload/sourcemap';
     this.logger = options.logger || true;
+    
 
     this.checkParams('dsn');
     this.checkParams('token');
@@ -40,19 +41,19 @@ class EyesSourceMap {
     formData.append('apiKey', this.token);
     
     try {
-      const response = await axios.post(`${sanitizedDsn}${api}`, formData, {
+      const response = await axios.post(`${this.dsn}${this.api}`, formData, {
         headers: formData.getHeaders(),
         timeout: 30000, // 30s
       });
 
       if (response.status !== 200) {
-        logger && console.warn(`Upload failed: ${response.status} (filename: ${name})`);
+        this.logger && console.warn(`Upload failed: ${response.status} (filename: ${name})`);
         return null;
       }
-      logger && console.log(`Filename: ${name} upload complete`);
+      this.logger && console.log(`Filename: ${name} upload complete`);
       return response.data;
     } catch (error) {
-      logger && console.warn(`Error during upload: ${error.message} (filename: ${name})`);
+      this.logger && console.warn(`Error during upload: ${error.message} (filename: ${name})`);
       return null;
     }
   }
@@ -68,7 +69,7 @@ class EyesSourceMap {
 
     for (const task of tasks) {
       const promise = task().catch((err) => {
-        logger && console.error(`Error during upload: ${err.message} (filename: ${task.name})`);
+        this.logger && console.error(`Error during upload: ${err.message} (filename: ${task.name})`);
         return err
       });
       results.push(promise);
@@ -100,9 +101,9 @@ class EyesSourceMap {
 
       try {
         await this.limitedConcurrency(uploadTasks, this.concurrency);
-        logger && console.log('All sourceMap files uploaded');
+        this.logger && console.log('All sourceMap files uploaded');
       } catch (error) {
-        logger && console.error('Error during upload:', error);
+        this.logger && console.error('Error during upload:', error);
       }
 
       if (!this.productionSourceMap) {
